@@ -1,16 +1,9 @@
-import requests
-import os
-from dotenv import load_dotenv
-from atproto import Client
+from auth import get_client
 
 
 def main():
-    load_dotenv()
-    user = os.environ.get("USER")
-    password = os.environ.get("PASSWORD")
 
-    client = Client()  
-    client.login(user,password)
+    client = get_client()
 
 if __name__ == '__main__':
     main()
