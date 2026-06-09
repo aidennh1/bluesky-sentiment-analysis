@@ -1,6 +1,8 @@
 import sqlite3
+import os
 
 def init_db(path: str = "data/sentiment.db") -> sqlite3.Connection:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     conn = sqlite3.connect(path)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS posts (

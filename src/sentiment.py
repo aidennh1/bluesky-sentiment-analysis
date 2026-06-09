@@ -12,6 +12,8 @@ def _get_pipe():
     return _pipe
 
 def score_posts(posts: list[dict]) -> list[dict]:
+    if not posts:
+        return []
     pipe = _get_pipe()
     texts = [p["text"][:512] for p in posts]
     results = pipe(texts, truncation=True)

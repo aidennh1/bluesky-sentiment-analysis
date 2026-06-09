@@ -1,12 +1,24 @@
 from auth import get_client
 from fetch import fetch_posts
+from sentiment import score_posts
+from storage import init_db, save_results
+from chart import plot_ticker
+
+TICKERS = ["NVDA", "AAPL", "TSLA"]
 
 def main():
-
     client = get_client()
-    posts = fetch_posts(client, "NVDA")
-    for i in range(3):
-        print(posts[i])
-        print()
-if __name__ == '__main__':
+    db = init_db()
+
+    raw = list(fetch_posts(client, TICKERS))
+    posts = [{"text": p[1], "ticker": p[0], "created_at": p[2]} for p in raw]
+    scored = score_posts(posts)
+
+    for ticker in TICKERS:
+        ticker_posts = [p for p in scored if p["ticker"] == ticker]
+        save_results(db, ticker, ticker_posts)
+
+    plot_ticker("NVDA", days=30)
+
+if __name__ == "__main__":
     main()

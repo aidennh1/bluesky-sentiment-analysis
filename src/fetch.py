@@ -5,7 +5,7 @@ from atproto import Client
 def fetch_posts(
     client: Client,
     ticker_list: list[str],
-    limit_per_ticker: int = 300,
+    limit_per_ticker: int = 500,
 ):
     for ticker in ticker_list:
         try:
